@@ -1,56 +1,61 @@
-//Asynkron javascript
-
-//Alternativ 1
-// let data = fetch('https://jsonplaceholder.typicode.com/todos/')
-// .then(response => response.json())
-//     .then(json => console.log(json))
-
-// Alternativ 2
-
 let getData = async (url) => {
-    let response = await fetch(url);
+    let response = await fetch(url)
     let data = await response.json();
-    return data
+    return data;
 }
+ //Uppgift 1
+// let renderPage = async () => {
+//      let todos = await getData("https://jsonplaceholder.typicode.com/todos");
+//     let ul = document.createElement("ul");
+//     document.body.append(ul);
 
+//     todos.forEach((todo) => {
+//         let li = document.createElement("li");
+//         li.innerText = `# ${todo.id} - ${todo.title}`
+//         ul.append(li);
+//         if(todo.completed) {
+//             li.classList.add("completed");
+//         }
+//     })
+// }
+// renderPage()
 
-//Alternativ 1
-// getData('https://jsonplaceholder.typicode.com/todos/1')
-// .then(data => {
-//     console.log(data)
-//     let h2 = document.createElement("h2");
-//     h2.innerText = data.title;
-//     document.body.append(h2);
+//Uppgift 2
+
+// let btn = document.querySelector("#getProfiles");
+
+// btn.addEventListener("click", async () => {
+//     let profiles = await getData("https://jsonplaceholder.typicode.com/users");
+//     console.log(profiles);
+
+//     profiles.forEach(profile => {
+//         //de-structuring
+//        let {name,email, phone, address} = profile;
+//     //    let name = profile.name
+//     //    let email = profile.email
+//     //    let phone = profile.phone
+
+//        let div = document.createElement("div");
+//        div.style.border = "2px solid black";
+//        div.innerHTML = `
+//         <p>Name: ${name}</p>
+//         <p>Email: ${email}</p>
+//         <p>Phone number: ${phone}</p>
+//         <p>Adress:${address.street}, ${address.city}</p>
+//        `
+//        document.body.append(div);
+//     })
 // })
 
-//async await
-let renderPage = async () => {
-    let todo = await getData("https://jsonplaceholder.typicode.com/todos/1")
-    
-    let user = await getData("https://jsonplaceholder.typicode.com/users/1")
-    
-    let posts = await getData("https://jsonplaceholder.typicode.com/posts")
+//Uppgift 3
 
-    //Ritar ut i DOM:en
-    //Skriver ut TODO
-    let h2 = document.createElement("h2");
-    h2.innerText = todo.title;
+let btn = document.querySelector("#getActivity");
+btn.addEventListener("click", async () => {
+    let activity = await getData("https://bored.api.lewagon.com/api/activity");
 
-    //Skriver ut USER
-    let h3 = document.createElement("h3");
-    h3.innerText = user.name;
-    document.body.append(h2,h3);
+    let {activity:activityName, type} = activity;
 
-    //Rita ut från array
-    // Skriver ut POSTS
-    posts.forEach((post) => {
-
-        let p = document.createElement("p");
-        p.innerText = "#" + post.id + "- " + post.title;
-        document.body.append(p);
-
-    })
-
-}
-
-renderPage()
+    document.querySelector("#activity").innerHTML = `
+        <h2>Activity name: ${activityName}</h2>
+        <p>Activity type: ${type}</p>`
+})
